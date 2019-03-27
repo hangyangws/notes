@@ -355,5 +355,5 @@ export default Lists;
 ```
 
 在 UI 组件内，使用 hooks：useContext。
-useContext 接受 store 导出的 Context 作为参数，得到 state、dispatch。
-使用 state 渲染数据，使用 dispatch 修改数据。
+useContext 接受 store 导出的 Context 作为参数，得到 state、dispatch。
+使用 state 渲染数据，使用 dispatch 修改数据。
