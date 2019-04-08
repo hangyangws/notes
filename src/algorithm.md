@@ -93,3 +93,122 @@ getReverseTime(stringReverse_4)
 getReverseTime(stringReverse_5)
 getReverseTime(stringReverse_6)
 ```
+
+
+### 获取最长子串长度
+
+```javascript
+const getStrMaxSubLength = (str) => {
+  if (typeof str !== 'string') {
+    return;
+  }
+
+  const strLeng = str.length;
+  if (strLeng < 2) {
+    return strLeng;
+  }
+
+  const temp = {};
+  let head = 0; // 检测子串头部指针
+  let maxLength = 0;
+
+  let index = 0;
+  while(index < strLeng)  {
+    if (temp[str[index]]) { // 存在
+      for(;;) {
+        if (str[head] === str[index]) {
+          head++;
+          break;
+        }
+        temp[str[head]] = false;
+        head++;
+      }
+    } else { // 不存在
+      temp[str[index]] = true;
+    }
+
+    maxLength = Math.max(maxLength, index - head + 1);
+    index++;
+  }
+
+  return maxLength;
+};
+```
+
+### 统计一个字符串出现频率最高的字母/数字
+
+```javascript
+const getMaxChar = (str) => {
+  const temp = {};
+  let max = 0;
+  let maxValue = null;
+
+  let index = 0;
+  while(index < str.length) {
+    if (temp[str[index]]) {
+      temp[str[index]]++;
+    } else {
+      temp[str[index]] = 1;
+    }
+
+    if (temp[str[index]] > max) {
+      max = temp[str[index]];
+      maxValue = str[index];
+    }
+
+    index++;
+  }
+
+  return {
+    max,
+    maxValue
+  };
+};
+```
+
+### 数组去重
+
+```javascript
+const uniqueArr = (arr) => {
+  return arr.filter((val, index) => {
+    return arr.findIndex(item => item === val) === index;
+  });
+};
+```
+
+### 节流函数
+
+```javascript
+// 一定时间最多运行一次
+const throttle = (fn, time) => {
+  const timer = null;
+
+  return (...res) => {
+    if (!timer) {
+      fn(...res);
+      timer = setTimeout(() => {
+        timer = null;
+      }, time);
+    }
+  };
+};
+```
+
+### 防抖函数
+
+```javascript
+// 短时间内连续触发的最算最后一次
+const debunce = (fn, time) => {
+  const timer = null;
+
+  return (...res) => {
+    if (timer) {
+      clearTimeout(timer);
+    }
+
+    timer = setTimeout(() => {
+      fn(...res);
+    }, time);
+  };
+};
+```
