@@ -2,34 +2,34 @@
 
 >*注：
 此文章立场不表示 Hooks 可以完全代替 Redux。
-因为 Redux 还有其他试用场景和功能，只在大部分场景可以用 Hooks 代替。
+因为 Redux 还有其他适用的场景和功能，只是在大部分场景可以用 Hooks 代替。
 理性选择即合理。*
 
 React Hooks 面世也有很大一段时间了。
 我相信很多人对于 Hooks 的认知还大概处在：
-1. 更 FP 编程方式
+1. 更 FP「Functional Programming」 编程方式
 2. 更简洁易测的组件
 3. 不用记住繁琐的生命周期函数
 4. …
 
-上述这些改变点其实已经足以说服很大一部分人升级他们的应用。
+上述这些特征点已经足以说服很大一部分人升级他们的 React 应用。
 但是总是感觉少了点什么。
 
 我们知道 React 是一个以构建 UI 为主的的库：
 A JavaScript library for building user interfaces.
 但是 UI 如果脱离了数据，基本上也就是耍流氓了。
-所以有 Redux、Mbox… 这样的以数据管理为核心的就库出现了。
+所以有 Redux、Mbox… 这样以数据管理为核心的库出现了。
 现实业务场景中，UI 与数据相辅相成。
 
-在我最初学 React 的时候，原于成熟的方案、同事的推荐，直接是和 Redux 一起学习和上手开发的。
-当时我就在想：React 为什么不能自己实现类似 Redux 那样的数据处理功能呢？ 
-对于想学习 React 的同学，无疑是增加了学习 Redux 的成本，
+在我最初学 React 的时候，原于成熟的方案、同事的推荐，是直接和 Redux 一起学习并且上手开发的。
+当时我就在想：React 为什么不能自己实现类似 Redux 那样的数据处理功能呢？
+对于想学习 React 的同学，无疑是增加了 Redux 的学习成本，
 更加深了 React 的门槛与神秘值「这可不是一个优秀的开源库该有的特质」。
 
 往简单了说 Redux 就是实现了全局 state 、处理全局 state 的方式和统一的数据处理中心，也就是 store、dispatch 和 reducer。
 虽然在 Hooks 之前我们可以通过 Context 模拟全局 state，但是我们还不能优雅的模拟 dispatch、reducer。
 
-如果 React 能出一个数据处理的解决方案，
+如果 React 官方能出一个数据处理的解决方案，
 不单单是减少一个 Redux npm 包的 bundle 体积，
 还降低了学习与构建 React 应用的成本，
 最重要的是更统一化的数据处理思想。
@@ -37,8 +37,8 @@ A JavaScript library for building user interfaces.
 年前，我在构建一个新的后台管理应用，考虑使用全新的 Hooks API。
 当时 React 最新的版本还是 `16.7.0-alpha.2`。
 在对于数据处理上，我尝试了新的 [React Context API](https://reactjs.org/docs/context.html#api)，
-使用 Context `Provider` 和 `Consumer` 的方式实现去 Redux 的数据处理方案「这也是网上大部分推荐的去 Redux 方案」。
-但是代码越写越多，数据越来越大，数据分类越来越多的时候，Context 显得力不从心，
+使用 Context API 提供的 `Provider` 和 `Consumer` 的方法，去实现代替 Redux 的数据处理方案「这也是网上大部分推荐的代替 Redux 的方案」。
+但是代码越写越多，数据处理量越来越大，数据分类越来越多的时候，Context 显得力不从心，
 虽然能解决需求，但是代码组织方式已经乱成了一锅粥「尝试过这个方案的人，应该知道我在说什么」。
 
 > *注：更不要使用 useState + context 的方式创建全局仓库来代替 Redux。*
@@ -64,7 +64,7 @@ redux 的数据流程图画得比较简单，理解大概意思就好，毕竟�
 
 从 hooks 数据流能大致看出来，
 我们设计好 store 后，通过对应的 hooks 函数生成每个 store 的 Provider 和 Context。
-我们把所有的 Provider 糅合为一个整体的 Provider，作为所有 UI 的父组件。
+我们把所有的单个 Provider 糅合为一个整体的 Providers，作为所有 UI 的父组件。
 
 在任何一个子 UI 组件内部，通过 hooks 函数得到对应 store 的 state、dispatch。
 UI 组件内，通过主动调用 dispatch 发送 action，然后经过 store 的数据处理中心 reducer，就能触发相应的数据改变。
@@ -73,14 +73,15 @@ UI 组件内，通过主动调用 dispatch 发送 action，然后经过 store �
 ### 相同点
 
 1. 统一 store 数据管理
-2. 统一以 UI 发送 action 以修改数据
-3. 都有 reducer action 处理中心
+2. 支持以发送 action 来修改数据
+3. 支持 action 处理中心：reducer
 
 ### 异同点
 
 1. hooks UI 层获取 store 和 dispatch 不需要用 HOC 依赖注入，而是用 useContext
 2. redux 在 action 之后改变视图本质上还是 state 注入的方式修改的组件内部 state，而 hooks 则是一对一的数据触发
 3. hooks 的 reducer 来自于 useReducer
+4. hooks 还没有 [middleware](https://redux.js.org/advanced/middleware) 的解决方案
 
 ## 构建应用 DEMO
 
@@ -98,7 +99,7 @@ UI 组件内，通过主动调用 dispatch 发送 action，然后经过 store �
 
 ![文件结构.png](../img/hooks-replace-redux/文件结构.png)
 
-这个目录是比较简单的，毕竟是个 DEMO，和 hooks 没关的没列出来。
+这个目录是比较简单的，毕竟是个 DEMO，和 hooks 无关的没列出来。
 
 #### index.js 应用入口
 
@@ -171,7 +172,7 @@ export default Provider;
 ```
 
 仔细观察这里的代码人应该会发现一个问题：
-在 store 拓展的的情况下，这个代码很可能出 **现代码嵌套地狱**，类似这样：
+在 store 拓展的的情况下，这个代码很可能出现 **代码嵌套地狱**，类似这样：
 
 ```javascript
 ...
@@ -269,7 +270,6 @@ export default { Context, Provider };
 初始化的 state、dispatch 来自于 hooks：useReducer：
 通过 useReducer 函数传入 reducer、initState，得到这样的数据结构： `[state, dispatch]`。
 
-
 不同的数据项的代码完全是通用，差异点在于每个数据项的 reducer、initState 不一样。
 
 #### reducer
@@ -357,3 +357,8 @@ export default Lists;
 在 UI 组件内，使用 hooks：useContext。
 useContext 接受 store 导出的 Context 作为参数，得到 state、dispatch。
 使用 state 渲染数据，使用 dispatch 修改数据。
+
+### 真实代码示例
+
+通过上面的目录结构、store 设计、UI 组件三大步骤，我们可以使用 hooks 搭建出和 redux 一样的数据处理流程应用了。
+如果想进一步了解，可以参考应用：[tw-agents](https://github.com/hangyangws/tw-agents)。
