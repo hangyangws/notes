@@ -1,5 +1,52 @@
 # 算法
 
+### DP 动态规划
+
+```javascript
+/**
+ * 给出一些具有不同面额的硬币，例如 [1, 2, 5]，并测试他们是否可以弥补一定的数量「N」，
+ * 假设你在每种面额上使用无限数量的硬币。
+ * 例如：
+ * 如果 coin = [1, 2, 5] 且 N = 11，则返回 true；
+ * 如果 coin = [3, 77] 且 N = 100，则返回 false。
+ */
+
+
+/**
+ * 返回一个数「resultNumber」最少使用多少个候选的数「selectArray」拼凑而成
+ * @param {Array} selectArray 候选的数字列表
+ * @param {int} resultNumber 需要拼凑的数字
+ */
+const getMinNumberArray = (selectArray, resultNumber) => {
+  const number = [0];
+
+  let index = 1;
+  while (index <= resultNumber) {
+    let cost = Infinity;
+
+    let index2 = selectArray.length;
+    while (index2--) {
+      if (index - selectArray[index2] >= 0) {
+        cost = Math.min(cost, number[index - selectArray[index2]] + 1);
+      }
+    }
+
+    number[index++] = cost;
+  }
+
+  return number;
+};
+
+const isFill = (selectArray, resultNumber) => {
+  const minNumberArray = getMinNumberArray(selectArray, resultNumber);
+
+  return minNumberArray[resultNumber] !== Infinity;
+};
+
+console.log(isFill([1, 2, 5], 1)); // true
+console.log(isFill([3, 77], 100)); // false
+```
+
 ### 字符串反转
 
 ```javascript
