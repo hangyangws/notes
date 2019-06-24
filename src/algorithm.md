@@ -72,6 +72,36 @@ console.log(getStringArray([1, 5, 11], 15));
 // 返回： 
 // ["", "1", "1、1", "1、1、1", "1、1、1、1", "5", "1、5", "1、1、5", "1、1、1、5", "1、1、1、1、5", "5、5", "11", "1、11", "1、1、11", "1、1、1、11", "5、5、5"]
 // 数组下标 15 的 "5、5、5" 表示需要 3 张 5 元
+```
+
+```javascript
+// 最长上升子序列（LIS）问题：给定长度为n的序列a，从a中抽取出一个子序列，这个子序列需要单调递增。问最长的上升子序列（LIS）的长度。
+// e.g. 1,5,3,4,6,9,7,8的LIS为1,3,4,6,7,8，长度为6。
+
+const getLongAscNumbers = (arr = []) => {
+  const longAscNumbers = [];
+
+  let index_out = 0;
+  while (index_out < arr.length) {
+    let tempNumber = 0;
+
+    let index_in = 0;
+    while (index_in < index_out) {
+      if (arr[index_in] < arr[index_out]) {
+        tempNumber = Math.max(tempNumber, longAscNumbers[index_in]);
+      }
+      index_in++;
+    }
+
+    longAscNumbers[index_out++] = tempNumber + 1;
+  }
+
+  return longAscNumbers;
+};
+
+getLongAscNumbers([1, 5, 3, 4, 6, 9, 7, 8]);
+// 返回：[1, 2, 2, 3, 4, 5, 5, 6]
+
 
 ```
 
