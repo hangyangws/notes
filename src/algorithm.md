@@ -4,13 +4,11 @@
 
 ```javascript
 /**
- * 给出一些具有不同面额的硬币，例如 [1, 2, 5]，并测试他们是否可以弥补一定的数量「N」，
- * 假设你在每种面额上使用无限数量的硬币。
- * 例如：
- * 如果 coin = [1, 2, 5] 且 N = 11，则返回 true；
- * 如果 coin = [3, 77] 且 N = 100，则返回 false。
+ * 假设您是个土豪，身上带了足够的1、5、10、20、50、100元面值的钞票。
+ * 现在您的目标是凑出某个金额w，需要用到尽量少的钞票。
+ * 例如输入：[1, 5, 11] 和 15
+ * 得到凑出 15 最少需要 3 张 5 元的钞票。
  */
-
 
 /**
  * 返回一个数「resultNumber」最少使用多少个候选的数「selectArray」拼凑而成
@@ -27,24 +25,54 @@ const getMinNumberArray = (selectArray, resultNumber) => {
     let index2 = selectArray.length;
     while (index2--) {
       if (index - selectArray[index2] >= 0) {
-        cost = Math.min(cost, number[index - selectArray[index2]] + 1);
+        cost = Math.min(cost, number[index - selectArray[index2]]);
       }
     }
 
-    number[index++] = cost;
+    number[index++] = cost === Infinity ? null : cost + 1;
   }
 
   return number;
 };
 
-const isFill = (selectArray, resultNumber) => {
-  const minNumberArray = getMinNumberArray(selectArray, resultNumber);
+const getStringArray = (selectArray, resultNumber) => {
+  const number = [0];
+  const path = [''];
 
-  return minNumberArray[resultNumber] !== Infinity;
+  let index = 1;
+  while (index <= resultNumber) {
+    let cost = Infinity;
+    let eachPath = '';
+
+    let index2 = selectArray.length;
+    while (index2--) {
+      if (index - selectArray[index2] >= 0) {
+        if (number[index - selectArray[index2]] + 1 < cost) {
+          const preStr = path[index - selectArray[index2]]
+            ? path[index - selectArray[index2]] + '、'
+            : '';
+          eachPath = `${preStr}${selectArray[index2]}`;
+        }
+
+        cost = Math.min(cost, number[index - selectArray[index2]] + 1);
+      }
+    }
+
+    path[index] = eachPath;
+    number[index++] = cost === Infinity ? null : cost;
+  }
+
+  return path;
 };
 
-console.log(isFill([1, 2, 5], 1)); // true
-console.log(isFill([3, 77], 100)); // false
+console.log(getMinNumberArray([1, 5, 11], 15));
+// 返回：[0, 1, 2, 3, 4, 1, 2, 3, 4, 5, 2, 1, 2, 3, 4, 3]
+// 数组下标 15 的 3 表示需要 3 张钱
+console.log(getStringArray([1, 5, 11], 15));
+// 返回： 
+// ["", "1", "1、1", "1、1、1", "1、1、1、1", "5", "1、5", "1、1、5", "1、1、1、5", "1、1、1、1、5", "5、5", "11", "1、11", "1、1、11", "1、1、1、11", "5、5、5"]
+// 数组下标 15 的 "5、5、5" 表示需要 3 张 5 元
+
 ```
 
 ### 字符串反转
