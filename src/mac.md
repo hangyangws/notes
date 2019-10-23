@@ -14,15 +14,6 @@ Shell 是 Linux/Unix 的一个外壳，负责外界与 Linux 内核的交互
 - `defaults write com.apple.finder AppleShowAllFiles Yes && killall Finder`：显示隐藏文件
 - `defaults write com.apple.finder AppleShowAllFiles NO && killall Finder`：隐藏「隐藏」文件
 
-### softWare
+### 文件批量重命名
 
-- 搜狗入法
-- nodejs
-- 有道云笔记
-- AppCleaner
-- PS cc && sketch「design」
-- The Unarchiver「解压文件」
-- iTerm2「oh my zsh」
-- Googole Chrome
-- QQ、微信、网易云音乐
-- 迅雷
+`for f in ./**/*.jsx; do mv "$f" "${f%.*}.tsx"; done;`
