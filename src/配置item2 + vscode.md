@@ -24,10 +24,15 @@
 
 1. markdownlint
 2. Sublime Text Keymap and Settings Importer
-3. 修改 terminal 字体为 powerline: `"terminal.integrated.fontFamily": "Source Code Pro for Powerline"`
-4. cmd + k 清理 terminal 屏幕
 
-  按住 cmd+Shift+P组合按钮打开设置窗口，输入> open keyboard Shortcuts(JSON), 在里面输入:
+
+- 修改 terminal 字体为 powerline: 
+
+  `"terminal.integrated.fontFamily": "Source Code Pro for Powerline"`
+
+- cmd + k 清理 terminal 屏幕
+
+  按住 cmd+Shift+P 组合按钮打开设置窗口，输入> open keyboard Shortcuts(JSON), 在里面输入:
 
   ```json
   [{
@@ -38,6 +43,6 @@
   }]
   ```
 
-5. 支持 code 命令行打开 vsCode:
+- 支持 code 命令行打开 vsCode:
 
   ⌘⇧P, 输入 ‘shell command’，在提示里看到 Shell Command: Install 'code' command in PATH，运行它就可以了
