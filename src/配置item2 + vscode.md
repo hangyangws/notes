@@ -5,7 +5,7 @@
 
 ## 配置 iterm2
 
-- [下载 iter2](https://www.iterm2.com/downloads.html)，然后安装
+- [下载 iterm2](https://www.iterm2.com/downloads.html)，然后安装
 - 安装 [oh-my-zsh](https://ohmyz.sh/)
 - 安装字体 [Powerline fonts](https://github.com/powerline/fonts)
 - 主题修改 [agnoster-zsh-theme](https://github.com/agnoster/agnoster-zsh-theme)
