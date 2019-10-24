@@ -108,7 +108,7 @@
 
 ### 配置 sublime 主题
 
-个人审美不同，我喜欢：[Material Theme](http://equinsuocha.io/material-theme)  
+个人审美不同，我喜欢：Material Theme  
 Material Theme 的 [github 首页](https://github.com/equinusocio/material-theme#easy-installation) 有安装教程  
 安装成功后，在 sublime 参数里面添加如下配置  
 
