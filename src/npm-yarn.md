@@ -57,6 +57,10 @@ npm version 0.3.2 -m "…"
 npm publish
 ```
 
+### 查看已经 link 模块
+
+`npm ls -g --depth=0 --link=true`
+
 # yarn
 
 如果你既不喜欢 npm 的安装速度，也不想使用 cnpm ，那么我建议你使用 [yarn](https://yarnpkg.com/zh-Hans/)  
